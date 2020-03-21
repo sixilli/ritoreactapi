@@ -6,5 +6,4 @@ import { Hello } from "./components/hello";
 ReactDom.render(
     <Hello compiler="TypeScript" framework="React" />,
     document.getElementById("owo")
-
 )
