@@ -5,10 +5,10 @@ export async function request(key: String, param: String) {
         case param = 'summonerName':
             break
 
-        case param = 'rankedSolo':
+        case param = 'challengerRankedSolo':
             break
 
-        case param = 'match':
+        case param = 'matchHistory':
             break
     }
 
