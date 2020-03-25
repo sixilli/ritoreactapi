@@ -1,7 +1,7 @@
 import React, { Component, MouseEvent } from 'react';
 
 export default class Modal extends Component {
-    handleClick = () => {
+    handleClick(event: MouseEvent) {
         this.props.toggle()
     }
 

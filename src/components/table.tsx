@@ -1,38 +1,45 @@
 
 import * as React from "react";
-import from "../api/driver.ts"
+import request from "../api/driver"
 
-export interface TableProps {
-    summonerCtx: object
+export interface ISummonerCtx  {
+    'summoner-name': string,
+    'api-key': string
 }
 
-export class Table extends React.Component<{}, TableProps> {
-    constructor(props: TableProps) {
-        super(props)
-        this.state = {
-            summonerCtx: {}
-        }
+export function core() {
+    const [summmonerCtx, setSummonerCtx] = React.useState({})
 
-        this.handleSummonerCtxChange = this.handleSummonerCtxChange.bind(this)
+    const updateCtx = (ctx: ISummonerCtx) => {
+        setSummonerCtx(ctx)
     }
 
+    return(
+        <div className="Core">
+            <SearchBar onSummonerCtxUpdate={updateCtx} />
+        </div>
+    )
+}
 
-    handleSummonerCtxChange(obj: any) {
-        this.setState({
-            summonerCtx: obj
+function SearchBar({ onSummonerCtxUpdate }: {onSummonerCtxUpdate: any}) {
+    const [summonerName, setSummonerName] = React.useState('')
+    const [apiKey, setApiKey] = React.useState('')
+
+    const handleOnSubmit = () => {
+        onSummonerCtxUpdate({
+            'summoner-name': summonerName,
+            'apiKey': apiKey
         })
     }
-    
-    render() {
-        return (
-            <div>
-                <SearchBar updateSummoner={this.handleSummonerCtxChange} />
-                <TableRow summonerCtx={this.state.summonerCtx} />
-            </div>
-        )
-    }
-}
 
+    return (
+        <div className="search-bar">
+            <input type="text" placeholder="Api Key" onChange={e => setApiKey(e.target.value)} />
+            <input type="text" placeholder="Summoner Name" onChange={e => setSummonerName(e.target.value)} />
+            <button onClick={handleOnSubmit}>Submit</button>
+        </div>
+    )
+}
 export class TableRow extends React.Component<TableProps, {}> {
     render() {
         const rows = []
@@ -41,15 +48,6 @@ export class TableRow extends React.Component<TableProps, {}> {
     }
 }
 
-class SearchBar extends React.Component<TableProps, {}> {
-    render() {
-        return (
-            <form>
-                <input type="text" placeholder="Summoner Name" />
-            </form>
-        )
-    }
-}
 
 class SummonerInfo extends React.Component<TableProps, {}> {
     render() {
