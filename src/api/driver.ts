@@ -1,6 +1,6 @@
-import axios, { AxiosInstance } from "axios"
-import { apiKey } from "../../secrets"
-import { endpoints } from "./endpoints"
+import axios, { AxiosInstance } from "axios";
+// import { apiKey } from "../../secrets"
+import { endpoints } from "./endpoints";
 
 export async function request(apiKey: string, endpoint: string, criteria?: string) {
     let instance: AxiosInstance = axios.create({

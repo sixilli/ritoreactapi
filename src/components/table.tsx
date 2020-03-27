@@ -1,13 +1,14 @@
 
-import * as React from "react";
-import request from "../api/driver"
+import * as React from "react"; 
+import { FunctionComponent } from "react";
+import { request } from "../api/driver";
 
 export interface ISummonerCtx  {
     'summoner-name': string,
     'api-key': string
 }
 
-export function core() {
+export const TableParent: FunctionComponent = () => {
     const [summmonerCtx, setSummonerCtx] = React.useState({})
 
     const updateCtx = (ctx: ISummonerCtx) => {
@@ -39,18 +40,4 @@ function SearchBar({ onSummonerCtxUpdate }: {onSummonerCtxUpdate: any}) {
             <button onClick={handleOnSubmit}>Submit</button>
         </div>
     )
-}
-export class TableRow extends React.Component<TableProps, {}> {
-    render() {
-        const rows = []
-
-        this.props.summonerCtx
-    }
-}
-
-
-class SummonerInfo extends React.Component<TableProps, {}> {
-    render() {
-
-    }
 }

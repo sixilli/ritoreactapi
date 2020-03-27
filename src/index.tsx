@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
 
-import { Hello } from "./components/hello";
+import * as table from "./components/table";
 
 ReactDom.render(
-    <Hello compiler="TypeScript" framework="React" />,
+    <table.TableParent />,
     document.getElementById("owo")
 )

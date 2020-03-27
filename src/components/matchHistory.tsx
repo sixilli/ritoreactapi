@@ -6,7 +6,6 @@ export function matchHistory() {
 
     return (
         <div>
-            {showMatches && <Match name="Meow" />}
         </div>
 
     )
