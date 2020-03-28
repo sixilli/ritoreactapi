@@ -51,7 +51,7 @@ function SearchBar({ onSummonerCtxUpdate }: {onSummonerCtxUpdate: any}) {
     const handleOnSubmit = () => {
         onSummonerCtxUpdate({
             'summoner-name': summonerName,
-            'apiKey': apiKey
+            'api-key': apiKey
         })
     }
 

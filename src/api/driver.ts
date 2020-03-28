@@ -5,8 +5,13 @@ import { endpoints } from "./endpoints";
 export async function request(apiKey: string, endpoint: string, criteria?: string) {
     let instance: AxiosInstance = axios.create({
         timeout: 1000,
-        headers: {"X-Riot-Token": apiKey}
-    });
+        headers: {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101 Firefox/74.0",
+            "X-Riot-Token": apiKey,
+        }
+    })
+
+    console.log(`are my inputs okay? ${apiKey} ${endpoint} ${criteria}`)
 
     try {
         let response = await endpointManager(endpoint, instance, criteria)
@@ -23,14 +28,14 @@ async function endpointManager(endpoint: string, instance: AxiosInstance, criter
         try {
             switch(endpoint) {
                 case endpoint = endpoints['summonerName']:
-                    return await instance.get(endpoint + criteria)
+                    return await instance.get(`${endpoint}${criteria}`)
 
                 case endpoint = endpoints['challengerRankedSolo']:
                     return await instance.get(endpoint)
 
                 // Only call from match history screen.
                 case endpoint = endpoints['match']:
-                    return await instance.get(endpoint + criteria)
+                    return await instance.get(`${endpoint}${criteria}`)
 
                 case endpoint = endpoints['matchHistory']:
                     let r = await instance.get(endpoints['summonerName'] + criteria)
