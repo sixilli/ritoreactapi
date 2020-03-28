@@ -13,23 +13,33 @@ export const TableParent: FunctionComponent = () => {
     //const [summonerCtx, setSummonerCtx]: [ISummonerCtx, any] = React.useState()
     const [apiKey, setApiKey] = React.useState('')
     const [name, setName] = React.useState('')
+    const [hasCtx, setHasCtx] = React.useState(false)
+    const [data, setData] = React.useState({})
 
     const updateCtx = (ctx: ISummonerCtx) => {
         setApiKey(ctx['api-key'])
         setName(ctx['summoner-name'])
+        setHasCtx(true)
     }
 
 
-    //React.useEffect(async () => {
-    //    if (summonerCtx) {
-    //        setRequest(RequestDisplay(summonerCtx['api-key'], summonerCtx['summoner-name']))
-    //    }
-    //})
+    React.useEffect(() => {
+        RequestDisplay({ apiKey:apiKey, summonerName:name }).then(result => {
+            setData(result)
+        })
+    })
+
+    if (hasCtx) {
+        return(
+        <div className="Core">
+            {data}
+        </div>
+        )
+    }
 
     return(
         <div className="Core">
             <SearchBar onSummonerCtxUpdate={updateCtx} />
-            <RequestDisplay apiKey={apiKey} summonerName={name}/>
         </div>
     )
 }
@@ -54,18 +64,22 @@ function SearchBar({ onSummonerCtxUpdate }: {onSummonerCtxUpdate: any}) {
     )
 }
 
-const RequestDisplay = ({ apiKey, summonerName }: { apiKey: string, summonerName: string }) => {
-    let temp: string = 'RGAPI-ec09ccf9-8a8e-4dee-8ab5-8a8ab99c05c3'
-    const req = (async () => {
-        await request(temp, endpoints['summonerName'], summonerName)
-    })()
-    
-    return (
-        <div className="request-display">
-            <ul>
-                {Object.entries(req).map(([key, value]) => 
-                    <li>{key}: {value}</li>)}
-            </ul>
-        </div>
-    )
+const RequestDisplay = async ({ apiKey, summonerName }: { apiKey: string, summonerName: string }) => {
+    try {
+        let secret: string = 'RGAPI-ec09ccf9-8a8e-4dee-8ab5-8a8ab99c05c3'
+        let req = await request(secret, endpoints['summonerName'], summonerName)
+
+        console.log('Request: ' + req)
+        
+        return (
+            <div className="request-display">
+                <ul>
+                    {Object.entries(req).map(([key, value]) => 
+                        <li>{key}: {value}</li>)}
+                </ul>
+            </div>
+        )
+    } catch(e) {
+        console.log(e)
+    }
 }

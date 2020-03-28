@@ -10,7 +10,6 @@ export async function request(apiKey: string, endpoint: string, criteria?: strin
 
     try {
         let response = await endpointManager(endpoint, instance, criteria)
-        console.log(response.data)
         return response.data
 
     } catch (error) {
@@ -23,20 +22,20 @@ async function endpointManager(endpoint: string, instance: AxiosInstance, criter
         // Use for loop to match possible end points
         try {
             switch(endpoint) {
-                case endpoint = 'summonerName':
-                    return await instance.get(endpoints[endpoint] + criteria)
+                case endpoint = endpoints['summonerName']:
+                    return await instance.get(endpoint + criteria)
 
-                case endpoint = 'challengerRankedSolo':
-                    return await instance.get(endpoints[endpoint])
+                case endpoint = endpoints['challengerRankedSolo']:
+                    return await instance.get(endpoint)
 
                 // Only call from match history screen.
-                case endpoint = 'match':
-                    return await instance.get(endpoints[endpoint] + criteria)
+                case endpoint = endpoints['match']:
+                    return await instance.get(endpoint + criteria)
 
-                case endpoint = 'matchHistory':
+                case endpoint = endpoints['matchHistory']:
                     let r = await instance.get(endpoints['summonerName'] + criteria)
                     let id = r.data['accountId']
-                    return await instance.get(`${endpoints[endpoint]}${id}`)
+                    return await instance.get(`${endpoint}${id}`)
 
             }
         } catch (error) {
